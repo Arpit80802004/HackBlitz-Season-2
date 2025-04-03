@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Recommendation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        /* Background styling */
+        body {
+            background: url('https://www.color-meanings.com/wp-content/uploads/Yellow-and-purple-painted-wall.jpeg') no-repeat center center/cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Form container */
+        .container {
+            background: rgba(224, 29, 146, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+            margin-top: 50px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+            transform: scale(0.9);
+            animation: popUp 0.8s ease-in-out forwards;
+        }
+
+        /* Typing Animation for Heading */
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid white;
+            width: 0;
+            display: inline-block;
+            animation: typing 3s steps(30, end) forwards, blinkCursor 0.8s infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+
+        /* Fade-in Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Pop-up effect */
+        @keyframes popUp {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+
+        /* Input Field Focus Animation */
+        .form-control:focus {
+            border-color: #FFD700;
+            box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Button Hover Effect */
+        .btn-primary {
+            background-color: #FFD700;
+            border: none;
+            color: black;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFB800;
+            transform: scale(1.05);
+        }
+
+        /* Result Box Animation */
+        .result-box {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInResult 0.8s ease-in-out forwards;
+        }
+
+        @keyframes fadeInResult {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Career links styling */
+        .career-link {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .career-link:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h2 class="text-center"><span class="typing">Find Your Ideal Career</span></h2>
+        <form id="careerForm" class="mt-4">
+            <div class="mb-3">
+                <label for="skills" class="form-label">Enter Your Skills</label>
+                <input type="text" class="form-control" id="skills" placeholder="e.g., Python, Design, Marketing">
+            </div>
+            <div class="mb-3">
+                <label for="interests" class="form-label">Your Interests</label>
+                <input type="text" class="form-control" id="interests" placeholder="e.g., AI, Web Development">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Get Career Suggestions</button>
+        </form>
+        <div id="results" class="mt-4"></div>
+    </div>
+
+    <!-- Internal JavaScript -->
+    <script>
+        document.getElementById("careerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let skills = document.getElementById("skills").value.toLowerCase();
+            let interests = document.getElementById("interests").value.toLowerCase();
+
+            // Career Recommendations
+            let careerSuggestions = "";
+
+            if (skills.includes("python") || interests.includes("ai") || interests.includes("machine learning")) {
+                careerSuggestions += `<li>🚀 <a href="https://www.ibm.com/think/topics/machine-learning" class="career-link" target="_blank">Machine Learning Engineer</a></li>`;
+            }
+            if (skills.includes("design") || interests.includes("ui/ux")) {
+                careerSuggestions += `<li>🎨 <a href="https://www.coursera.org/specializations/ui-ux-design" class="career-link" target="_blank">UI/UX Designer</a></li>`;
+            }
+            if (skills.includes("marketing") || interests.includes("social media")) {
+                careerSuggestions += `<li>📢 <a href="https://www.investopedia.com/terms/s/social-media-marketing-smm.asp" class="career-link" target="_blank">Digital Marketer</a></li>`;
+            }
+            if (skills.includes("web") || interests.includes("frontend") || skills.includes("javascript")) {
+                careerSuggestions += `<li>💻 <a href="https://roadmap.sh/frontend" class="career-link" target="_blank">Frontend Developer</a></li>`;
+            }
+            if (skills.includes("backend") || interests.includes("database") || skills.includes("sql")) {
+                careerSuggestions += `<li>🛠 <a href="https://roadmap.sh/backend" class="career-link" target="_blank">Backend Developer</a></li>`;
+            }
+            if (skills.includes("cybersecurity") || interests.includes("security")) {
+                careerSuggestions += `<li>🔐 <a href="https://www.skillindiadigital.gov.in/courses/detail/9390e20a-9cac-48f7-9fb4-35eddca4aeae" class="career-link" target="_blank">Cybersecurity Specialist</a></li>`;
+            }
+            if (careerSuggestions === "") {
+                careerSuggestions = "<li>🤷 No specific match found. Try learning more skills!</li>";
+            }
+
+            document.getElementById("results").innerHTML = `
+                <div class="alert alert-success mt-3 result-box">
+                    <h4>✨ Suggested Careers for You:</h4>
+                    <ul>${careerSuggestions}</ul>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
